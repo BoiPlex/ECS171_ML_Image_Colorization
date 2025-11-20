@@ -8,7 +8,7 @@ a, button, li {
     cursor: none !important;
 }
 
-/* Also explicitly hide for pseudo-classes and interactive elements */ 
+/* Explicitly hide for pseudo-classes and interactive elements */ 
 a:hover, 
 a:active, 
 a:focus, 
@@ -29,20 +29,22 @@ li:focus {
 }
 
 
-/* Site header */
 .site-header {
+  position: fixed;      /* stick to top-left */
+  top: 0;
+  left: 0;
+  width: 100%;          /* span full width */
   display: flex;
   align-items: center;
-  justify-content: flex-start; /* left align */
-  padding: 20px;
+  padding: 20px 30px;   /* padding from edges */
   background: #f9f9f9;
+  z-index: 1000;        /* above other content */
 }
 
-/* Logo styling */
 .site-header .logo {
-  font-family: 'Baloo 2', cursive;  /* bubble font */
-  font-size: 1.5rem;
-  font-weight: 500;
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.8rem;
+  font-weight: 600;
   color: #111;
 }
 
@@ -52,13 +54,15 @@ body {
   font-family: 'Baloo 2', cursive;
   background: #f9f9f9;
   color: #111;
+  padding-top: 80px;   /* leave space for fixed header */
 }
 
 /* Page container */
 .work-page {
-  max-width: 960px;
+  width: 95%;          
+  max-width: 1200px;   /* optional max width */
   margin: 0 auto;
-  padding: 40px 20px;
+  padding: 20px;
 }
 
 /* Header */
@@ -179,4 +183,17 @@ body {
 .project-description {
   font-size: 1rem;
   line-height: 1.5;
+}
+
+.project-link {
+  text-decoration: none; /* remove underline */
+  display: block;
+  color: inherit;        /* keep text color */
+}
+
+.project-link:hover .project-card {
+  transform: scale(1.03);
+  box-shadow: inset -5px -5px 18px rgba(255,255,255,0.9),
+              inset 5px 5px 18px rgba(0,0,0,0.15),
+              0 12px 30px rgba(0,0,0,0.15);
 }
