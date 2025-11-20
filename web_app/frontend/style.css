@@ -1,11 +1,60 @@
+/* Remove all default cursors */
+html, body, * {
+  cursor: none !important;
+}
+
+/* Explicitly remove cursor for links, buttons, and list items */ 
+a, button, li { 
+    cursor: none !important;
+}
+
+/* Also explicitly hide for pseudo-classes and interactive elements */ 
+a:hover, 
+a:active, 
+a:focus, 
+button:hover, 
+button:active, 
+button:focus, 
+li:hover, 
+li:active, 
+li:focus { 
+    cursor: none !important; 
+}
+
+/* Hide cursor everywhere */
+*,
+*::before,
+*::after {
+  cursor: none !important;
+}
+
+
+/* Site header */
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* left align */
+  padding: 20px;
+  background: #f9f9f9;
+}
+
+/* Logo styling */
+.site-header .logo {
+  font-family: 'Baloo 2', cursive;  /* bubble font */
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #111;
+}
+
 /* Base styles */
 body {
   margin: 0;
-  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Baloo 2', cursive;
   background: #f9f9f9;
   color: #111;
 }
 
+/* Page container */
 .work-page {
   max-width: 960px;
   margin: 0 auto;
@@ -25,52 +74,58 @@ body {
   margin-bottom: 20px;
 }
 
-.categories {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  gap: 24px;
+/* Menu bubble container */
+.menu-bubble {
+  display: inline-flex;
+  background: #f0f0f0;          /* light grey bubble */
+  border-radius: 32px;           /* pill shape */
+  padding: 6px;
+  gap: 8px;                      /* spacing between items */
+  margin: 20px 0;                /* space from header */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  list-style: none;              /* remove bullets */
 }
 
-.categories li {
-  cursor: pointer;
+/* Menu items */
+.menu-bubble a {
+  text-decoration: none;         /* remove underline */
+  color: #111;                   /* black text */
+  padding: 8px 20px;             /* bubble padding */
+  border-radius: 24px;           /* pill shape for hover */
+  transition: background 0.3s ease, color 0.3s ease;
+  font-weight: 500;
   font-size: 1rem;
-  position: relative;
-  padding: 4px 0;
+  display: inline-block;
 }
 
-.categories li.active::after {
-  content: '';
-  position: absolute;
-  height: 2px;
-  background: #000;
-  bottom: 0;
-  left: 0;
-  right: 0;
+/* Highlight individual menu item on hover or active */
+.menu-bubble a:hover,
+.menu-bubble a.active {
+  background: #dcdcdc;           /* light grey highlight */
+  color: #111;                   /* text stays black */
 }
 
-/* Grid / Projects */
+/* Projects grid */
 .projects-grid {
   display: grid;
-  grid-template-columns: 1fr; /* single project card per row */
+  grid-template-columns: 1fr;
   gap: 40px;
 }
 
+/* Project card */
 .project-card {
   background: linear-gradient(145deg, #ffffff, #e0e0e0);
   border-radius: 16px;
   overflow: hidden;
   position: relative;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  cursor: pointer;
   padding: 24px;
   box-shadow: inset -5px -5px 15px rgba(255,255,255,0.8),
               inset 5px 5px 15px rgba(0,0,0,0.1),
               0 8px 24px rgba(0,0,0,0.1);
 }
 
-/* Hover effect: enlarge slightly and intensify shadow */
+/* Hover effect */
 .project-card:hover {
   transform: scale(1.03);
   box-shadow: inset -5px -5px 18px rgba(255,255,255,0.9),
@@ -78,7 +133,7 @@ body {
               0 12px 30px rgba(0,0,0,0.15);
 }
 
-/* Glossy animated shine */
+/* Glossy shine */
 .project-card::before {
   content: '';
   position: absolute;
@@ -97,14 +152,13 @@ body {
   pointer-events: none;
 }
 
-/* Shine animation moves diagonally across the card */
 @keyframes shine {
   0% { transform: rotate(25deg) translate(-100%, -100%); }
   50% { transform: rotate(25deg) translate(100%, 100%); }
   100% { transform: rotate(25deg) translate(-100%, -100%); }
 }
 
-/* Project info inside the card */
+/* Project info */
 .project-info h2 {
   margin: 0 0 12px 0;
   font-size: 1.75rem;
