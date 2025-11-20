@@ -1,0 +1,128 @@
+/* Base styles */
+body {
+  margin: 0;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  background: #f9f9f9;
+  color: #111;
+}
+
+.work-page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+/* Header */
+.work-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 60px;
+}
+
+.work-header h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.categories {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 24px;
+}
+
+.categories li {
+  cursor: pointer;
+  font-size: 1rem;
+  position: relative;
+  padding: 4px 0;
+}
+
+.categories li.active::after {
+  content: '';
+  position: absolute;
+  height: 2px;
+  background: #000;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+/* Grid / Projects */
+.projects-grid {
+  display: grid;
+  grid-template-columns: 1fr; /* single project card per row */
+  gap: 40px;
+}
+
+.project-card {
+  background: linear-gradient(145deg, #ffffff, #e0e0e0);
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  padding: 24px;
+  box-shadow: inset -5px -5px 15px rgba(255,255,255,0.8),
+              inset 5px 5px 15px rgba(0,0,0,0.1),
+              0 8px 24px rgba(0,0,0,0.1);
+}
+
+/* Hover effect: enlarge slightly and intensify shadow */
+.project-card:hover {
+  transform: scale(1.03);
+  box-shadow: inset -5px -5px 18px rgba(255,255,255,0.9),
+              inset 5px 5px 18px rgba(0,0,0,0.15),
+              0 12px 30px rgba(0,0,0,0.15);
+}
+
+/* Glossy animated shine */
+.project-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    120deg,
+    rgba(255,255,255,0.2) 0%,
+    rgba(255,255,255,0.05) 50%,
+    rgba(255,255,255,0.2) 100%
+  );
+  transform: rotate(25deg);
+  animation: shine 3s infinite linear;
+  pointer-events: none;
+}
+
+/* Shine animation moves diagonally across the card */
+@keyframes shine {
+  0% { transform: rotate(25deg) translate(-100%, -100%); }
+  50% { transform: rotate(25deg) translate(100%, 100%); }
+  100% { transform: rotate(25deg) translate(-100%, -100%); }
+}
+
+/* Project info inside the card */
+.project-info h2 {
+  margin: 0 0 12px 0;
+  font-size: 1.75rem;
+}
+
+.project-tags {
+  margin-bottom: 16px;
+}
+
+.project-tags span {
+  background: #eee;
+  border-radius: 4px;
+  padding: 4px 8px;
+  margin-right: 8px;
+  font-size: 0.875rem;
+}
+
+.project-description {
+  font-size: 1rem;
+  line-height: 1.5;
+}
