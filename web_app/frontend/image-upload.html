@@ -3,26 +3,89 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Image Colorization Upload</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Image Recolorization Upload</title>
+  <link rel="stylesheet" href="image-upload.css">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500&display=swap" rel="stylesheet">
 </head>
 <body>
   <header class="site-header">
-    <div class="logo">ECS 171 Group 12</div>
+    <div class="logo">ECS 171 Group 3</div>
+    <a href="project.html" class="back-arrow">
+        ← Back to Projects
+    </a>
   </header>
 
-  <div class="work-page">
-    <h1>Upload Grayscale Image</h1>
-    <form id="upload-form" enctype="multipart/form-data">
-      <input type="file" id="image-input" accept="image/*" required>
-      <button type="submit">Upload & Colorize</button>
-    </form>
+  <div class="upload-container">
+    <h1>Image Recolorization Upload</h1>
 
-    <div id="result">
-      <!-- Here the colorized image will be displayed -->
+    <label class="upload-bubble" id="upload-bubble">
+      <p>Click or Drag & Drop a Grayscale Image Here</p>
+      <input type="file" id="image-input" accept="image/*">
+    </label>
+
+    <div class="instructions">
+      <p><strong>Instructions:</strong></p>
+      <ul>
+        <li>MUST be a grayscale image.</li>
+        <li>Recommended size: [...] pixels.</li>
+        <li>Best results: images of flowers or trees!</li>
+      </ul>
     </div>
   </div>
 
-  <script src="upload.js"></script>
+  <script>
+    // Custom cursor
+    const cursor = document.createElement('div');
+    cursor.style.width = '20px';
+    cursor.style.height = '20px';
+    cursor.style.borderRadius = '50%';
+    cursor.style.background = '#555';
+    cursor.style.position = 'fixed';
+    cursor.style.pointerEvents = 'none';
+    cursor.style.zIndex = 9999;
+    cursor.style.transition = 'transform 0.05s ease-out';
+    cursor.style.transform = 'translate(-50%, -50%)';
+    document.body.appendChild(cursor);
+
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+    });
+
+    // Bubble hover effect on upload
+    const uploadBubble = document.getElementById('upload-bubble');
+    uploadBubble.addEventListener('mouseenter', () => {
+      cursor.style.transform = 'translate(-50%, -50%) scale(1.5)';
+    });
+    uploadBubble.addEventListener('mouseleave', () => {
+      cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+    });
+
+    // Click to open file picker
+    const fileInput = document.getElementById('image-input');
+    uploadBubble.addEventListener('click', () => fileInput.click());
+
+    // Drag & drop handling
+    uploadBubble.addEventListener('dragover', e => {
+      e.preventDefault();
+      uploadBubble.classList.add('dragover');
+    });
+
+    uploadBubble.addEventListener('dragleave', e => {
+      e.preventDefault();
+      uploadBubble.classList.remove('dragover');
+    });
+
+    uploadBubble.addEventListener('drop', e => {
+      e.preventDefault();
+      uploadBubble.classList.remove('dragover');
+      const files = e.dataTransfer.files;
+      if (files.length > 0) {
+        fileInput.files = files;
+        console.log('File dropped:', files[0].name);
+        // TODO: send file to server
+      }
+    });
+  </script>
 </body>
 </html>

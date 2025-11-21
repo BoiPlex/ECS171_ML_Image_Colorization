@@ -1,0 +1,155 @@
+/* Remove all default cursors */
+html, body, * {
+  cursor: none !important; 
+  font-family: 'Baloo 2', cursive; 
+  box-sizing: border-box;
+}
+
+/* Explicitly remove cursor for links, buttons, and list items */ 
+a, button, li { 
+    cursor: none !important;
+}
+
+/* Explicitly hide for pseudo-classes and interactive elements */ 
+a:hover, 
+a:active, 
+a:focus, 
+button:hover, 
+button:active, 
+button:focus, 
+li:hover, 
+li:active, 
+li:focus { 
+    cursor: none !important; 
+}
+
+/* Hide cursor everywhere */
+*,
+*::before,
+*::after {
+  cursor: none !important;
+}
+
+/* Back arrow bubble */
+.back-arrow {
+  display: inline-block;
+  background: #eaeaea;
+  padding: 8px 16px;
+  border-radius: 20px;
+  text-decoration: none;
+  font-family: 'Baloo 2', cursive;
+  font-size: 0.95rem;
+  color: #111;
+  transition: background 0.3s ease, transform 0.15s ease;
+  cursor: none !important;
+}
+
+/* Hover effect matching your UI style */
+.back-arrow:hover {
+  background: #dcdcdc;
+  transform: scale(1.05);
+}
+
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;      /* vertical stack: logo on top, arrow below */
+  align-items: flex-start;     /* LEFT aligned, not center */
+  padding: 20px 30px;
+  background: #f9f9f9;
+  z-index: 1000;
+  box-sizing: border-box;
+}
+
+.site-header .logo {
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #111;
+  margin-bottom: 8px; /* small space before back arrow */
+}
+
+body {
+  margin: 0;
+  font-family: 'Baloo 2', cursive;
+  background: #f9f9f9;
+  color: #111;
+}
+
+/* ================================
+   Upload Page Styles
+   ================================ */
+.upload-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding-top: 150px; 
+}
+
+h1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Bubble upload box */
+.upload-bubble {
+  border: 2px dashed #ccc;
+  border-radius: 32px;
+  width: 300px;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.3s, border-color 0.3s;
+  cursor: none;
+  margin-bottom: 20px;
+  text-align: center;
+  padding: 20px;
+}
+
+.upload-bubble.dragover {
+  background: #f0f0f0;
+  border-color: #999;
+}
+
+.upload-bubble p {
+  font-size: 1rem;
+  color: #555;
+  margin-top: 10px;
+}
+
+.upload-bubble input[type="file"] {
+  display: none;
+}
+
+.upload-bubble:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.15);
+}
+
+/* Instructions text */
+.instructions {
+  max-width: 400px;
+  text-align: center;
+  font-size: 0.95rem;
+  color: #333;
+  line-height: 1.5;
+}
+
+.instructions strong {
+  color: #111;
+}
+
+.instructions ul {
+  text-align: left;      
+  padding-left: 20px;    
+  margin: 10px 0 0 0;    
+}
