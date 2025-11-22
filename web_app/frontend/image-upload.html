@@ -16,7 +16,7 @@
   </header>
 
   <div class="upload-container">
-    <h1>Image Recolorization Upload</h1>
+    <h1>Image Colorization Upload</h1>
 
     <label class="upload-bubble" id="upload-bubble">
       <p>Click or Drag & Drop a Grayscale Image Here</p>
@@ -31,6 +31,15 @@
         <li>Best results: images of flowers or trees!</li>
       </ul>
     </div>
+
+    <div id="loading" style="display:none;">
+    <div class="loading-bubble"></div>
+    <div class="loading-bar"><div id="loading-progress"></div></div>
+      <p>Processing image...</p>
+    </div>
+
+    <!-- Result -->
+    <div id="result"></div>
   </div>
 
   <script>
