@@ -83,7 +83,10 @@
       if (files.length > 0) {
         fileInput.files = files;
         console.log('File dropped:', files[0].name);
-        // TODO: send file to server
+        // Auto-submit form on drop
+        const form = document.getElementById('upload-form');
+        const submitEvent = new Event('submit');
+        form.dispatchEvent(submitEvent);
       }
     });
   </script>
