@@ -59,7 +59,6 @@ body {
 /* Page container */
 .work-page {
   width: 95%;          
-  max-width: 1200px;   /* optional max width */
   margin: 0 auto;
   padding: 20px;
 }
@@ -68,7 +67,7 @@ body {
 .work-header {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex;
   margin-bottom: 60px;
 }
 
@@ -195,4 +194,24 @@ body {
   box-shadow: inset -5px -5px 18px rgba(255,255,255,0.9),
               inset 5px 5px 18px rgba(0,0,0,0.15),
               0 12px 30px rgba(0,0,0,0.15);
+}
+
+.report-embed-container iframe {
+  pointer-events: auto !important;
+  cursor: auto !important;
+  width: 95%;
+  height: 100%;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.report-embed-container {
+  width: 100%;
+  height: calc(100vh - 180px);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: 20px;
+  box-sizing: border-box;
 }
