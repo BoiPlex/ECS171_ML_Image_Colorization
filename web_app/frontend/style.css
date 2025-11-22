@@ -28,7 +28,6 @@ li:focus {
   cursor: none !important;
 }
 
-
 .site-header {
   position: fixed;      /* stick to top-left */
   top: 0;
