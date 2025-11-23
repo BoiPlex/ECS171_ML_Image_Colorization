@@ -9,12 +9,12 @@ import numpy as np
 import io
 import os
 
-# Model constants
-MODEL_WIDTH = 28
-MODEL_HEIGHT = 28
+# Device setup
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+print(f"Using device: {device}")
 
 # Import model from backend package
-from model import ColorizationModel
+from model import ColorizationCNN, load_model, preprocess_image, compute_orthonormal_basis, reconstruct_color, LUMINANCE_WEIGHTS, MODEL_HEIGHT, MODEL_WIDTH
 
 # Get the path to the frontend folder
 frontend_path = os.path.join(os.path.dirname(__file__), '..', 'frontend')
@@ -22,71 +22,56 @@ frontend_path = os.path.join(os.path.dirname(__file__), '..', 'frontend')
 app = Flask(__name__, static_folder=frontend_path, static_url_path='')
 app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024  # 50MB max file size
 
-# Load model on startup (placeholder)
-model = ColorizationModel()
-model.eval()
-print("ColorizationModel instantiated from backend/model.py")
+# Load model on startup
+checkpoint_path = os.path.join(os.path.dirname(__file__), 'cifar10_colorizer.pth')
+model = load_model(ColorizationCNN, checkpoint_path, device)
+print(f"ColorizationCNN loaded from {checkpoint_path} on {device}")
 
 
-def preprocess_image(image_pil):
+# Compute color basis on startup
+w = LUMINANCE_WEIGHTS.to(device)
+u1, u2 = compute_orthonormal_basis(w, device)
+print(f"Color basis computed: w={w.tolist()}, u1={u1.tolist()}, u2={u2.tolist()}")
+
+
+def postprocess_output(L_tensor, alpha_beta_tensors, image_size=(MODEL_HEIGHT, MODEL_WIDTH)):
     """
-    Preprocess image for colorization model.
+    Reconstruct RGB image from luminance and alpha/beta coefficients.
     
-    1. Resize to model input size
-    2. Convert to grayscale
-    3. Convert to tensor
-    4. Normalize
+    The model outputs (alpha, beta) coefficients in an orthonormal color basis.
+    We reconstruct the full RGB image using:
+        V = (Y / (w·w)) * w + alpha * u1 + beta * u2
     
     Args:
-        image_pil: PIL Image
+        L_tensor: Input luminance (1, 1, H, W)
+        alpha_beta_tensors: Tuple of (alpha, beta) from model, each (1, 1, H, W)
+        image_size: (H, W) tuple for reshaping
         
     Returns:
-        torch.Tensor: Preprocessed image
+        PIL.Image: Colorized RGB image
     """
-    # Resize to model input size
-    image_resized = image_pil.resize((MODEL_WIDTH, MODEL_HEIGHT), Image.Resampling.LANCZOS)
+    alpha_pred, beta_pred = alpha_beta_tensors
     
-    # Convert to grayscale
-    image_gray = image_resized.convert('L')
+    # Extract and move to CPU
+    L = L_tensor.detach().cpu().squeeze(0).squeeze(0)  # (H, W)
+    alpha = alpha_pred.detach().cpu().squeeze(0).squeeze(0)  # (H, W)
+    beta = beta_pred.detach().cpu().squeeze(0).squeeze(0)  # (H, W)
     
-    # Convert to numpy array
-    image_array = np.array(image_gray, dtype=np.float32) / 255.0
+    # Flatten for reconstruction
+    L_flat = L.reshape(-1)  # (H*W,)
+    alpha_flat = alpha.reshape(-1)  # (H*W,)
+    beta_flat = beta.reshape(-1)  # (H*W,)
     
-    # Convert to tensor (add channel and batch dimensions)
-    tensor = torch.from_numpy(image_array).unsqueeze(0).unsqueeze(0)
+    # Reconstruct colors using orthonormal basis
+    V = reconstruct_color(L_flat, alpha_flat, beta_flat, w, u1, u2)  # (H*W, 3)
     
-    return tensor
-
-
-def postprocess_output(tensor_output):
-    """
-    Convert model output tensor to PIL Image.
-    
-    Args:
-        tensor_output: torch.Tensor of shape (1, 3, H, W)
-        
-    Returns:
-        PIL.Image: RGB image
-    """
-    # Detach and move to CPU
-    output = tensor_output.detach().cpu()
-    
-    # Remove batch dimension
-    output = output.squeeze(0)
-    
-    # Transpose to (H, W, C)
-    output = output.permute(1, 2, 0)
-    
-    # Convert to numpy and clip to [0, 1]
-    output_array = output.numpy()
-    output_array = np.clip(output_array, 0, 1)
-    
-    # Convert to [0, 255] and uint8
-    output_array = (output_array * 255).astype(np.uint8)
+    # Clamp to valid RGB range and reshape
+    V = V.clamp(0, 1)  # (H*W, 3)
+    rgb_array = V.reshape(image_size[0], image_size[1], 3).numpy() * 255  # (H, W, 3)
+    rgb_array = rgb_array.astype(np.uint8)
     
     # Convert to PIL Image
-    image_pil = Image.fromarray(output_array, mode='RGB')
-    
+    image_pil = Image.fromarray(rgb_array, mode='RGB')
     return image_pil
 
 
@@ -122,14 +107,14 @@ def colorize():
     image = Image.open(io.BytesIO(file.read()))
     
     # Preprocess image
-    tensor_input = preprocess_image(image)
+    tensor_input = preprocess_image(image).to(device)
     
     # Run through model
     with torch.no_grad():
-        tensor_output = model(tensor_input)
+        alpha_beta_output = model(tensor_input)
     
-    # Postprocess output
-    colorized_image = postprocess_output(tensor_output)
+    # Postprocess output (reconstruct RGB from alpha/beta and luminance)
+    colorized_image = postprocess_output(tensor_input, alpha_beta_output, (MODEL_HEIGHT, MODEL_WIDTH))
     
     # Save to bytes and return
     img_bytes = io.BytesIO()
@@ -144,8 +129,7 @@ def health():
     """Health check endpoint"""
     return jsonify({
         'status': 'ok',
-        'model_loaded': True,
-        'model_size': (MODEL_HEIGHT, MODEL_WIDTH)
+        'model_loaded': True
     })
 
 

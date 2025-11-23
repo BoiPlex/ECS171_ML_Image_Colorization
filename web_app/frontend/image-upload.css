@@ -187,8 +187,23 @@ h1 {
 }
 
 .result-image {
-  max-width: 100%;
-  margin-top: 20px;
+  max-width: 600px;
+  width: 90%;
+  height: auto;
+  margin-top: 30px;
   border-radius: 16px;
   box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+  display: block;
+}
+
+#result {
+  text-align: center;
+  margin-top: 40px;
+  width: 100%;
+}
+
+#result h2 {
+  font-size: 1.5rem;
+  color: #111;
+  margin-bottom: 15px;
 }
