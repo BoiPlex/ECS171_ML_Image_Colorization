@@ -36,7 +36,7 @@ li:focus {
   display: flex;
   align-items: center;
   padding: 20px 30px;   /* padding from edges */
-  background: #1b1b1bdc;
+  background: #2c2d2e;
   z-index: 1000;        /* above other content */
   justify-content: space-between;   /* push logo left + menu right */
   
@@ -54,9 +54,9 @@ li:focus {
   top: 0;
   left: 0;
   width: 100%;
-  height: 95px; /* same as header height */
-  background-color: black; /* black behind transparent header */
-  z-index: 0; /* behind header, above torn edge */
+  height: 90px; 
+  background-color: black; 
+  z-index: 0; 
 }
 
 /* Base styles */
@@ -81,8 +81,24 @@ body {
 .work-header {
   display: flex;
   flex-direction: column;
-  align-items: flex;
-  margin-bottom: 0px;
+  align-items: center;
+  padding: 10px 20px 60px;
+  position: relative;
+  z-index: 5;
+}
+
+.work-header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 250px;
+  background: url('scrap_paper.png') no-repeat center;
+  background-size: contain;
+  pointer-events: none;
+  z-index: -1; 
 }
 
 .work-header h1 {
@@ -93,7 +109,7 @@ body {
 /* Menu bubble container */
 .menu-bubble {
   display: inline-flex;
-  background: #f0f0f0;          /* light grey bubble */
+  background: #f0f0f0e8;          /* light grey bubble */
   border-radius: 32px;           /* pill shape */
   padding: 6px;
   gap: 8px;                      /* spacing between items */
@@ -106,7 +122,7 @@ body {
 /* Menu items */
 .menu-bubble a {
   text-decoration: none;         /* remove underline */
-  color: #111;                   
+  color: #2c2d2e;                   
   padding: 8px 20px;             /* bubble padding */
   border-radius: 24px;           /* pill shape for hover */
   transition: background 0.3s ease, color 0.3s ease;
@@ -118,7 +134,7 @@ body {
 /* Highlight individual menu item on hover or active */
 .menu-bubble a:hover,
 .menu-bubble a.active {
-  background: #f2f2f2;           /* light grey highlight */
+  background: #ffffff;           /* light grey highlight */
   color: #111;                   /* text stays black */
 }
 
@@ -127,15 +143,18 @@ body {
   display: grid;
   grid-template-columns: 1fr;
   gap: 40px;
+  margin-top: 20px;
 }
 
 /* Project card */
 .project-card {
+  margin: 0 auto;
   background: linear-gradient(145deg, #ffffff, #e0e0e0);
   border-radius: 16px;
   overflow: hidden;
   position: relative;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 80%;
   padding: 24px;
   box-shadow: inset -5px -5px 15px rgba(255,255,255,0.8),
               inset 5px 5px 15px rgba(0,0,0,0.1),
@@ -219,9 +238,35 @@ body {
   border: none;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  max-width: 750px;   
+  min-height: 430px;          
+  max-height: calc(100vh - 150px);
+  border: none;
 }
 
 .report-embed-container {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: 20px;
+  box-sizing: border-box;
+}
+
+.model-embed-container iframe {
+  pointer-events: auto !important;
+  cursor: auto !important;
+  width: 95%;
+  height: 100%;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  max-width: 729px;   
+  border: none;
+}
+
+.model-embed-container {
   width: 100%;
   height: calc(100vh - 180px);
   display: flex;
