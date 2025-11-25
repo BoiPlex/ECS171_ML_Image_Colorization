@@ -11,4 +11,5 @@ python app.py
 
 ## Endpoints
 
-- `POST /predict` - TODO: Upload image and get colorized result
+- `GET /models` - Return a list of all available models.
+- `POST /colourize` - Accepts a grayscale image and returns the colorized image, using the specified models.
