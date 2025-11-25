@@ -251,7 +251,10 @@ h1 {
 /* RESULTS: horizontal grid */
 .results-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(2, 1fr); /* 3 columns */
+  grid-template-rows: repeat(3, auto);   /* 2 rows */
+  justify-items: center;                  /* center each item in its cell */
+  align-items: start;   
   gap: 16px;
   width: 100%;
 }
