@@ -216,10 +216,30 @@ def health():
 
 @app.route('/models', methods=['GET'])
 def list_models():
-    """Return list of available models and their load status."""
+    """Return list of available models (with more readable display names) and their load status."""
     out = []
+    def clean_display(name):
+        # Remove extension
+        base = name.replace('.pth', '').replace('.pt', '')
+
+        # Replace underscores/hyphens with spaces
+        base = base.replace('_', ' ').replace('-', ' ')
+
+        # Title-case it (cnn → CNN preserved)
+        words = base.split()
+        title_words = [
+            w.upper() if w.lower() == "cnn" else w.capitalize()
+        for w in words
+        ]
+        return " ".join(title_words)
+
     for name, e in loaded_models.items():
-        out.append({'name': name, 'loaded': bool(e.get('loaded')), 'error': e.get('error')})
+        out.append({
+            'name': name,                          # actual filename used internally
+            'display_name': clean_display(name),   # readable name for UI
+            'loaded': bool(e.get('loaded')),
+            'error': e.get('error')
+        })
     return jsonify({'models': out}), 200
 
 

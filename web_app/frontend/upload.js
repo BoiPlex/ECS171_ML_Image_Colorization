@@ -95,7 +95,7 @@ async function loadModels() {
       if (m.loaded) cb.checked = true;
       const label = document.createElement('label');
       label.htmlFor = id;
-      label.textContent = m.name + (m.loaded ? '' : ' (failed to load)');
+      label.textContent = m.display_name + (m.loaded ? '' : ' (failed to load)');
       wrapper.appendChild(cb);
       wrapper.appendChild(label);
       modelsList.appendChild(wrapper);
