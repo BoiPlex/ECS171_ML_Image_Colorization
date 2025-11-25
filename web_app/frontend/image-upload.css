@@ -187,10 +187,9 @@ h1 {
 }
 
 .result-image {
-  max-width: 600px;
-  width: 90%;
+  width: 100%;
   height: auto;
-  margin-top: 30px;
+  margin-top: 15px;
   border-radius: 16px;
   box-shadow: 0 6px 18px rgba(0,0,0,0.15);
   display: block;
@@ -206,4 +205,39 @@ h1 {
   font-size: 1.5rem;
   color: #111;
   margin-bottom: 15px;
+}
+
+/* Result grid: two panels side-by-side */
+.result-grid {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.result-panel {
+  width: 48%;
+  min-width: 260px;
+  max-width: 400px;
+  background: #fff;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+  text-align: center;
+}
+
+.original-image {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  display: block;
+}
+
+@media (max-width: 780px) {
+  .result-panel { width: 100%; }
+  .upload-bubble { width: 260px; height: 260px; }
 }

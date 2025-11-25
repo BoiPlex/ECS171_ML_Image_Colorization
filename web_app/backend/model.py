@@ -14,9 +14,8 @@ import numpy as np
 # Model input size constants
 # ColorizationCNN expects square images with dimensions divisible by 8
 # (due to 3 stride-2 convolutions followed by 3 stride-2 transposed convolutions)
-# CIFAR-10 training uses 32x32 images
-MODEL_WIDTH = 32
-MODEL_HEIGHT = 32
+MODEL_WIDTH = 128
+MODEL_HEIGHT = 128
 
 # Luminance weights for converting RGB to grayscale
 # Standard luminance formula: Y = 0.299*R + 0.587*G + 0.114*B
