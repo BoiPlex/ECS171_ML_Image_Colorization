@@ -28,6 +28,9 @@
 **Training** (`/training`):
 - Develop and train the colorization model
 - Save trained model as `.pth` file (to be used by backend)
+- To run: Open model.ipynb, install dependencies, run cell by cell in Python 3.
+    - Training cell: Uncomment lines to pick which model and dataset to train.
+    - Testing cell: Uncomment lines to change how to model is tested (datasets, single image, multiple images in dir).
 
 **Backend** (`/web_app/backend`):
 - Flask API that loads model from `.pth` files on startup
