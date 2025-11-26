@@ -1,5 +1,20 @@
 # Image Colorization - ML Project
 
+TLDR: We built a CNN regressor model that converts grayscale images into color!
+
+- For an intro to our project please check out our [presentation](Presentation_Slides.pdf)!
+
+- For an in depth look, check out our [written report](Written_Report.pdf)!
+
+- To see our model in action, look below for instructions to run our code!
+
+
+![alt text](image.png)
+
+![alt text](image-1.png)
+
+![alt text](image-2.png)
+
 ## Project Structure
 
 ```
@@ -47,6 +62,7 @@
 - Web UI for uploading grayscale images
 - Calls backend `/colourize` endpoint
 - Displays colorized results
+- To run: We run our app from our backend dir, so look above to see our app in action
 
 ## Key Design Notes
 
